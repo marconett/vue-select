@@ -236,9 +236,8 @@
      * required to override bootstrap 3's
      * .dropdown-menu > li > a:hover {} styles
      */
-    background: #5897fb;
-    color: #fff;
-  }
+/*    background: #5897fb;
+*/  }
   .v-select .highlight:not(:last-child) {
     margin-bottom: 0; /* Fixes Bulma Margin */
   }
@@ -308,12 +307,12 @@
 
 <template>
   <div :dir="dir" class="dropdown v-select" :class="dropdownClasses">
-    <div ref="toggle" @mousedown.prevent="toggleDropdown" class="dropdown-toggle">
+    <div ref="toggle" @mousedown.prevent="toggleDropdown" class="dropdown-toggle" :style="{ 'border-color': accentColor1 }">
 
       <div class="vs__selected-options" ref="selectedOptions">
         <slot v-for="option in valueAsArray" name="selected-option-container"
               :option="(typeof option === 'object')?option:{[label]: option}" :deselect="deselect" :multiple="multiple" :disabled="disabled">
-          <span class="selected-tag" v-bind:key="option.index">
+          <span :style="{ 'color': accentColor2 }" class="selected-tag" v-bind:key="option.index">
             <slot name="selected-option" v-bind="(typeof option === 'object')?option:{[label]: option}">
               {{ getOptionLabel(option) }}
             </slot>
@@ -370,8 +369,8 @@
 
     <transition :name="transition">
       <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ 'max-height': maxHeight }" role="listbox" @mousedown="onMousedown">
-        <li role="option" v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ active: isOptionSelected(option), highlight: index === typeAheadPointer }" @mouseover="typeAheadPointer = index">
-          <a @mousedown.prevent.stop="select(option)">
+        <li :style="{ 'background-color': (index === typeAheadPointer) ? accentColor1 : bgColor }" role="option" v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ active: isOptionSelected(option) }" @mouseover="typeAheadPointer = index">
+          <a :style="{ 'color': optionColor.color }" @mousedown.prevent.stop="select(option)">
           <slot name="option" v-bind="(typeof option === 'object')?option:{[label]: option}">
             {{ getOptionLabel(option) }}
           </slot>
@@ -394,6 +393,23 @@
     mixins: [pointerScroll, typeAheadPointer, ajax],
 
     props: {
+
+      bgColor: {
+        default: {backgroundColor: 'red'}
+      },
+
+      accentColor1: {
+        default: {color: 'red'}
+      },
+
+      accentColor2: {
+        default: {color: 'red'}
+      },
+
+      optionColor: {
+        default: {color: 'red'}
+      },
+
       /**
        * Contains the currently selected value. Very similar to a
        * `value` attribute on an <input>. You can listen for changes
