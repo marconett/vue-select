@@ -132,6 +132,17 @@
     list-style: none;
     background: #fff;
   }
+
+  .dropdown-menu::-webkit-scrollbar {
+      background-color: var(--scrollBgColor);
+      width: 11px;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+      background-color: var(--scrollFgColor);
+      border-radius: 10px;
+  }
+
   .v-select .no-options {
     text-align: center;
   }
@@ -368,7 +379,7 @@
     </div>
 
     <transition :name="transition">
-      <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ 'max-height': maxHeight }" role="listbox" @mousedown="onMousedown">
+      <ul ref="dropdownMenu" v-if="dropdownOpen" class="dropdown-menu" :style="{ '--scrollBgColor': bgColor, '--scrollFgColor': accentColor1, 'background-color': bgColor, 'max-height': maxHeight, 'scrollbar-color': accentColor2+' '+bgColor }" role="listbox" @mousedown="onMousedown">
         <li :style="{ 'background-color': (index === typeAheadPointer) ? accentColor1 : bgColor }" role="option" v-for="(option, index) in filteredOptions" v-bind:key="index" :class="{ active: isOptionSelected(option) }" @mouseover="typeAheadPointer = index">
           <a :style="{ 'color': optionColor.color }" @mousedown.prevent.stop="select(option)">
           <slot name="option" v-bind="(typeof option === 'object')?option:{[label]: option}">
