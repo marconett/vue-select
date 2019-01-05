@@ -40,7 +40,7 @@
     width: 12px; /* To account for extra width from rotating. */
   }
   .v-select .open-indicator:before {
-    border-color: rgba(60, 60, 60, .5);
+    border-color: var(--color);
     border-style: solid;
     border-width: 3px 3px 0 0;
     content: '';
@@ -359,7 +359,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
 
-        <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator"></i>
+        <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator" :style="{ '--color': accentColor1 }"></i>
 
         <slot name="spinner">
           <div class="spinner" v-show="mutableLoading">Loading...</div>
